@@ -442,8 +442,61 @@
             background: #f5f5f5;
             border-top: 1px solid #e5e5e5;
             display: flex;
+            flex-direction: column;
             gap: 8px;
-            align-items: flex-end;
+        }
+        
+        /* ===== TURN-BASED RESPONDER SELECTOR ===== */
+        .responder-selector {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .responder-selector.show {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .responder-btn {
+            padding: 6px 12px;
+            background: white;
+            border: 2px solid #075e54;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #075e54;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        
+        .responder-btn:hover {
+            background: #f0fdf7;
+        }
+        
+        .responder-btn.selected {
+            background: #075e54;
+            color: white;
+        }
+        
+        .pass-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+        
+        .pass-btn:hover {
+            opacity: 0.9;
         }
 
         .input-wrapper {
@@ -562,8 +615,84 @@
             margin-top: 20px;
         }
 
+        /* ===== TRAIT MANAGEMENT ===== */
+        .trait-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .trait-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .trait-item input[type="text"] {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .trait-item input[type="text"]:focus {
+            outline: none;
+            border-color: #075e54;
+            background: #f0fdf7;
+        }
+
+        .trait-item-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .trait-delete-btn {
+            padding: 4px 8px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: 0.2s;
+        }
+
+        .trait-delete-btn:hover {
+            opacity: 0.8;
+        }
+
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
+            }
+
+            .main-content {
+                margin-left: 280px;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            header {
+                height: 56px;
+                padding: 8px 12px;
+            }
+
+            header strong {
+                font-size: 1rem;
+            }
+
             .sidebar {
                 width: 100%;
                 transform: translateX(-100%);
@@ -571,31 +700,92 @@
 
             .main-content {
                 margin-left: 0;
+                margin-top: 56px;
             }
 
             .message {
-                max-width: 85%;
+                max-width: 80%;
+                padding: 8px 12px;
+                font-size: 13px;
             }
 
             .message-group.mentor .message {
-                max-width: 90%;
+                max-width: 85%;
             }
 
             .chat-window {
-                padding: 12px;
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .chat-header {
+                padding: 10px 12px;
+            }
+
+            .chat-header-title strong {
+                font-size: 14px;
             }
 
             .input-area {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            .input-wrapper {
+                gap: 6px;
+            }
+
+            #userInput {
                 padding: 10px 12px;
+                font-size: 14px;
+                border-radius: 18px;
+            }
+
+            .send-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+
+            .responder-selector {
+                font-size: 11px;
+                gap: 4px;
+            }
+
+            .responder-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+
+            .pass-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .quick-actions button {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .btn {
+                padding: 10px 14px;
+                font-size: 13px;
             }
 
             .sidebar.mobile-shown {
                 transform: translateX(0);
                 position: fixed;
-                top: 60px;
+                top: 56px;
                 left: 0;
                 right: 0;
                 z-index: 850;
+                height: calc(100vh - 56px);
             }
 
             .overlay {
@@ -611,6 +801,66 @@
 
             .overlay.show {
                 display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                height: 52px;
+                gap: 8px;
+            }
+
+            header strong {
+                font-size: 0.95rem;
+            }
+
+            .main-content {
+                margin-top: 52px;
+            }
+
+            .message {
+                max-width: 85%;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .chat-header-title strong {
+                font-size: 13px;
+            }
+
+            .chat-header-subtitle {
+                font-size: 11px;
+            }
+
+            .input-area {
+                padding: 8px;
+            }
+
+            #userInput {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .send-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 15px;
+            }
+
+            .responder-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+
+            .pass-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+                flex: 1;
+            }
+
+            .modal-content {
+                width: 95vw;
+                max-height: 85vh;
             }
         }
 
@@ -679,6 +929,11 @@
                 </div>
                 <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 12px 0;">
                 <div class="form-group">
+                    <label>🎨 Character Traits</label>
+                    <button class="btn btn-secondary" onclick="openTraitManagementModal()" style="width: 100%;">⚙️ Manage Traits</button>
+                </div>
+                <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 12px 0;">
+                <div class="form-group">
                     <button class="btn btn-secondary" onclick="showUserGuide()">📖 User Guide</button>
                     <button class="btn btn-secondary" onclick="exportData()">📤 Export All Data</button>
                     <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
@@ -705,6 +960,7 @@
     <div class="chat-window" id="chatWindow"></div>
 
     <div class="input-area" id="inputArea" style="display: none;">
+        <div id="responderSelectorContainer" class="responder-selector"></div>
         <div class="input-wrapper">
             <div id="quickActionsContainer" class="quick-actions"></div>
             <div class="input-box">
@@ -753,6 +1009,10 @@
             <label>Traits (comma-separated)</label>
             <input type="text" id="personaTraits" placeholder="e.g., Positive, Analytical, Direct">
         </div>
+        <div class="form-group">
+            <label>Character Trait Sliders</label>
+            <div id="createTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px;"></div>
+        </div>
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('createPersonaModal')">Cancel</button>
             <button class="btn btn-primary" onclick="createPersona()">Create Persona</button>
@@ -771,6 +1031,30 @@
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('mentorModal')">Close</button>
             <button class="btn btn-primary" onclick="askMentor()">Ask Mentor</button>
+        </div>
+    </div>
+</div>
+
+<div id="traitManagementModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">⚙️ Manage Character Traits</div>
+        <div class="form-group">
+            <label>Active Traits</label>
+            <div id="traitsList" style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px; padding: 8px;"></div>
+        </div>
+        <div class="form-group">
+            <label>Add New Trait</label>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="newTraitName" placeholder="e.g., Humor, Creativity" style="flex: 1; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                <button class="btn btn-primary" onclick="addNewTrait()" style="white-space: nowrap;">+ Add</button>
+            </div>
+        </div>
+        <div style="background: #f5f5f5; padding: 10px; border-radius: 6px; font-size: 12px; color: #666; margin-bottom: 12px;">
+            💡 Tip: Customize your trait names by editing them above. Only enabled traits appear in persona creation.
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('traitManagementModal')">Done</button>
+            <button class="btn btn-primary" onclick="saveTraitChanges()">💾 Save Traits</button>
         </div>
     </div>
 </div>
@@ -794,6 +1078,10 @@
         <div class="form-group">
             <label>Traits (comma-separated)</label>
             <input type="text" id="editPersonaTraits" placeholder="e.g., Positive, Analytical, Direct">
+        </div>
+        <div class="form-group">
+            <label>Character Trait Sliders</label>
+            <div id="editTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px;"></div>
         </div>
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('editPersonaModal')">Cancel</button>
@@ -844,12 +1132,31 @@
         },
         savePersonaHistory(groupId, personaId, history) {
             localStorage.setItem(`psychology_history_${groupId}_${personaId}`, JSON.stringify(history));
+        },
+        getTraitDefinitions() {
+            return JSON.parse(localStorage.getItem('psychology_trait_definitions') || JSON.stringify([
+                { id: 'optimism', label: 'Optimism', enabled: true },
+                { id: 'directness', label: 'Directness', enabled: true },
+                { id: 'empathy', label: 'Empathy', enabled: true },
+                { id: 'skepticism', label: 'Skepticism', enabled: true },
+                { id: 'assertiveness', label: 'Assertiveness', enabled: true },
+                { id: 'creativity', label: 'Creativity', enabled: false },
+                { id: 'patience', label: 'Patience', enabled: false },
+                { id: 'humor', label: 'Humor', enabled: false },
+                { id: 'formality', label: 'Formality', enabled: false },
+                { id: 'confidence', label: 'Confidence', enabled: false }
+            ]));
+        },
+        saveTraitDefinitions(traits) {
+            localStorage.setItem('psychology_trait_definitions', JSON.stringify(traits));
         }
     };
 
     // ==================== GLOBAL STATE ====================
     let currentGroup = null;
     let personaHistories = {}; // {personaId: [{role, parts}]}
+    let conversationMode = 'mention'; // 'mention' = @mentions, 'turnbased' = one at a time
+    let nextResponderIndex = 0; // Track which persona responds next in turn-based mode
     let mentorSystemPrompt = `You are an expert communication coach and conversation strategist. Your role is to help people respond effectively in conversations. 
 
 When analyzing a conversation:
@@ -925,6 +1232,27 @@ Format responses with clear sections:
 
     // ==================== PERSONA MANAGEMENT ====================
     window.openCreatePersonaModal = () => {
+        // Populate trait sliders in create modal
+        const traitDefinitions = Storage.getTraitDefinitions();
+        const traitContainer = document.getElementById('createTraitSlidersContainer');
+        if (traitContainer) {
+            traitContainer.innerHTML = '';
+            traitDefinitions.forEach(trait => {
+                if (trait.enabled) {
+                    const div = document.createElement('div');
+                    div.style.marginBottom = '8px';
+                    div.innerHTML = `
+                        <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                            <span>${trait.label}</span>
+                            <span id="create-trait-${trait.id}-display">50</span>
+                        </div>
+                        <input type="range" id="create-trait-${trait.id}" min="0" max="100" value="50" style="width: 100%;" onchange="document.getElementById('create-trait-${trait.id}-display').textContent = this.value">
+                    `;
+                    traitContainer.appendChild(div);
+                }
+            });
+        }
+        
         document.getElementById('createPersonaModal').classList.add('show');
     };
 
@@ -932,9 +1260,17 @@ Format responses with clear sections:
         const name = document.getElementById('personaName').value.trim();
         const avatar = document.getElementById('personaAvatar').value.trim() || '🤖';
         const prompt = document.getElementById('personaPrompt').value.trim();
-        const traits = document.getElementById('personaTraits').value.split(',').map(t => t.trim()).filter(t => t);
+        const tags = document.getElementById('personaTraits').value.split(',').map(t => t.trim()).filter(t => t);
 
         if (!name || !prompt) return alert('Please fill in all fields');
+
+        // Create trait values object
+        const traitDefinitions = Storage.getTraitDefinitions();
+        const traitValues = {};
+        traitDefinitions.forEach(trait => {
+            const slider = document.getElementById(`create-trait-${trait.id}`);
+            if (slider) traitValues[trait.id] = parseInt(slider.value);
+        });
 
         const personas = Storage.getPersonas();
         const newPersona = {
@@ -942,7 +1278,8 @@ Format responses with clear sections:
             name,
             avatar,
             systemPrompt: prompt,
-            traits,
+            tags,
+            traitValues,
             createdAt: new Date().toISOString()
         };
 
@@ -984,11 +1321,12 @@ Format responses with clear sections:
         personas.forEach(persona => {
             const div = document.createElement('div');
             div.className = 'persona-item';
+            const preview = persona.tags ? persona.tags.join(', ') : (persona.traits ? persona.traits.join(', ') : 'No tags');
             div.innerHTML = `
                 <div class="item-avatar">${persona.avatar}</div>
                 <div class="item-content">
                     <div class="item-name">${persona.name}</div>
-                    <div class="item-preview">${persona.traits.join(', ')}</div>
+                    <div class="item-preview">${preview}</div>
                 </div>
                 <div class="item-actions">
                     <button onclick="editPersona('${persona.id}')">✎</button>
@@ -1122,6 +1460,71 @@ Format responses with clear sections:
         });
 
         chatWindow.scrollTop = chatWindow.scrollHeight;
+        
+        // Initialize responder selector
+        updateResponderSelector(groupId);
+        nextResponderIndex = 0;
+    }
+    
+    function updateResponderSelector(groupId) {
+        const group = Storage.getGroups().find(g => g.id === groupId);
+        const personas = Storage.getPersonas().filter(p => group.personaIds.includes(p.id));
+        const container = document.getElementById('responderSelectorContainer');
+        
+        if (personas.length <= 1) {
+            container.classList.remove('show');
+            container.innerHTML = '';
+            return;
+        }
+        
+        container.classList.add('show');
+        container.innerHTML = '<span style="margin-right: 8px; font-weight: 600;">Who responds next?</span>';
+        
+        personas.forEach((persona, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'responder-btn';
+            if (idx === nextResponderIndex) btn.classList.add('selected');
+            btn.textContent = `${persona.avatar} ${persona.name}`;
+            btn.onclick = () => {
+                nextResponderIndex = idx;
+                updateResponderSelector(groupId);
+            };
+            container.appendChild(btn);
+        });
+        
+        const passBtn = document.createElement('button');
+        passBtn.className = 'pass-btn';
+        passBtn.textContent = '✋ Pass & Get Response';
+        passBtn.onclick = () => getResponderResponse();
+        container.appendChild(passBtn);
+    }
+    
+    async function getResponderResponse() {
+        if (!currentGroup) return;
+        
+        const group = Storage.getGroups().find(g => g.id === currentGroup.id);
+        const personas = Storage.getPersonas().filter(p => group.personaIds.includes(p.id));
+        const persona = personas[nextResponderIndex];
+        
+        if (!persona) return;
+        
+        // Get the last user message
+        const messages = Storage.getGroupMessages(currentGroup.id);
+        const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+        
+        if (!lastUserMsg) {
+            alert('No user message to respond to');
+            return;
+        }
+        
+        const apiKey = Storage.getApiKey();
+        if (!apiKey) return alert('Please set your API key in settings');
+        
+        await getPersonaResponse(persona, lastUserMsg.text, apiKey);
+        
+        // Move to next persona
+        nextResponderIndex = (nextResponderIndex + 1) % personas.length;
+        updateResponderSelector(currentGroup.id);
     }
 
     // ==================== CHAT & MESSAGING ====================
@@ -1168,9 +1571,6 @@ Format responses with clear sections:
         const text = input.value.trim();
         if (!text || !currentGroup) return;
 
-        const apiKey = Storage.getApiKey();
-        if (!apiKey) return alert('Please set your API key in settings');
-
         input.value = '';
 
         // Add user message
@@ -1180,11 +1580,39 @@ Format responses with clear sections:
         Storage.saveGroupMessages(currentGroup.id, messages);
         displayMessage(userMsg);
 
-        // Get responses from all personas in group
-        const personas = Storage.getPersonas().filter(p => currentGroup.personaIds.includes(p.id));
+        // Check for @mentions in the text
+        const mentionMatch = text.match(/@(\w+)/g);
+        const allPersonas = Storage.getPersonas().filter(p => currentGroup.personaIds.includes(p.id));
         
-        for (const persona of personas) {
-            await getPersonaResponse(persona, text, apiKey);
+        if (mentionMatch) {
+            // If message has @mentions, get responses from mentioned personas
+            const mentionedNames = mentionMatch.map(m => m.substring(1).toLowerCase());
+            const targetPersonas = allPersonas.filter(p => mentionedNames.includes(p.name.toLowerCase()));
+            
+            if (targetPersonas.length === 0) {
+                // No matching persona names found
+                const msg = {
+                    role: 'model',
+                    text: '❌ No persona named: ' + mentionMatch.join(', '),
+                    senderPersonaId: null,
+                    timestamp: new Date().toISOString()
+                };
+                messages.push(msg);
+                Storage.saveGroupMessages(currentGroup.id, messages);
+                displayMessage(msg, true);
+                return;
+            }
+            
+            const apiKey = Storage.getApiKey();
+            if (!apiKey) return alert('Please set your API key in settings');
+            
+            for (const persona of targetPersonas) {
+                await getPersonaResponse(persona, text, apiKey);
+            }
+        } else {
+            // No @mentions - prompt user to select responder via Pass button
+            nextResponderIndex = 0;
+            updateResponderSelector(currentGroup.id);
         }
 
         updateGroupsList();
@@ -1194,9 +1622,24 @@ Format responses with clear sections:
         try {
             const history = Storage.getPersonaHistory(currentGroup.id, persona.id);
             const genAI = new window.GoogleGenerativeAI(apiKey);
+            
+            // Build trait context string if trait values exist
+            let enhancedSystemPrompt = persona.systemPrompt;
+            if (persona.traitValues && Object.keys(persona.traitValues).length > 0) {
+                const traitDefinitions = Storage.getTraitDefinitions();
+                const traitDescriptions = traitDefinitions
+                    .filter(t => persona.traitValues[t.id] !== undefined)
+                    .map(t => `${t.label}: ${persona.traitValues[t.id]}`)
+                    .join(', ');
+                
+                if (traitDescriptions) {
+                    enhancedSystemPrompt += `\n\nPersonality Traits (0=low, 100=high): ${traitDescriptions}\n\nModulate your responses according to these traits. For example, higher Optimism means frame situations more positively, higher Skepticism means question assumptions more, higher Empathy means show more emotional understanding.`;
+                }
+            }
+            
             const model = genAI.getGenerativeModel({
                 model: 'gemini-flash-latest',
-                systemInstruction: persona.systemPrompt
+                systemInstruction: enhancedSystemPrompt
             });
 
             const chat = model.startChat({ history });
@@ -1294,6 +1737,111 @@ Format responses with clear sections:
         if (!key) return alert('Please enter an API key');
         Storage.saveApiKey(key);
         alert('✅ API key saved and encrypted');
+    };
+
+    window.openTraitManagementModal = () => {
+        renderTraitsList();
+        openModal('traitManagementModal');
+    };
+
+    function renderTraitsList() {
+        const traits = Storage.getTraitDefinitions();
+        const listContainer = document.getElementById('traitsList');
+        listContainer.innerHTML = '';
+
+        traits.forEach((trait, index) => {
+            const div = document.createElement('div');
+            div.className = 'trait-item';
+            div.innerHTML = `
+                <input type="checkbox" ${trait.enabled ? 'checked' : ''} onchange="toggleTraitEnabled(${index})">
+                <input type="text" id="trait-name-${index}" value="${trait.label}" placeholder="Trait name" onchange="updateTraitName(${index})">
+                <div class="trait-item-actions">
+                    <button class="trait-delete-btn" onclick="deleteTrait(${index})">Delete</button>
+                </div>
+            `;
+            listContainer.appendChild(div);
+        });
+    }
+
+    window.toggleTraitEnabled = (index) => {
+        const traits = Storage.getTraitDefinitions();
+        if (traits[index]) {
+            traits[index].enabled = !traits[index].enabled;
+            renderTraitsList();
+        }
+    };
+
+    window.updateTraitName = (index) => {
+        const newName = document.getElementById(`trait-name-${index}`)?.value.trim();
+        const traits = Storage.getTraitDefinitions();
+        if (traits[index] && newName) {
+            traits[index].label = newName;
+        }
+    };
+
+    window.deleteTrait = (index) => {
+        if (!confirm('Delete this trait? Persona trait values for this will be lost.')) return;
+        const traits = Storage.getTraitDefinitions();
+        traits.splice(index, 1);
+        
+        // Update all personas to remove this trait from their traitValues
+        const personas = Storage.getPersonas();
+        personas.forEach(persona => {
+            if (persona.traitValues) {
+                delete persona.traitValues[traits[index]?.id];
+            }
+        });
+        Storage.savePersonas(personas);
+        
+        renderTraitsList();
+    };
+
+    window.addNewTrait = () => {
+        const nameInput = document.getElementById('newTraitName');
+        const name = nameInput.value.trim();
+        
+        if (!name) return alert('Please enter a trait name');
+        
+        const traits = Storage.getTraitDefinitions();
+        
+        // Generate ID from name (lowercase, spaces to underscores)
+        const id = name.toLowerCase().replace(/\s+/g, '_');
+        
+        // Check for duplicates
+        if (traits.some(t => t.id === id)) {
+            return alert('A trait with this name already exists');
+        }
+        
+        traits.push({
+            id: id,
+            label: name,
+            enabled: true
+        });
+        
+        Storage.saveTraitDefinitions(traits);
+        nameInput.value = '';
+        renderTraitsList();
+        alert(`✅ Trait "${name}" added and enabled!`);
+    };
+
+    window.saveTraitChanges = () => {
+        const traits = Storage.getTraitDefinitions();
+        
+        // Update all trait names from input fields
+        traits.forEach((trait, index) => {
+            const input = document.getElementById(`trait-name-${index}`);
+            if (input) {
+                trait.label = input.value.trim() || trait.label;
+            }
+        });
+        
+        Storage.saveTraitDefinitions(traits);
+        
+        // Refresh all modals that use trait sliders
+        updateResponderSelector(currentGroup?.id);
+        
+        closeModal('traitManagementModal');
+        alert('✅ Traits updated! Changes will apply to all personas.');
     };
 
     window.showUserGuide = () => {
@@ -1403,7 +1951,29 @@ Format responses with clear sections:
         document.getElementById('editPersonaName').value = persona.name;
         document.getElementById('editPersonaAvatar').value = persona.avatar;
         document.getElementById('editPersonaPrompt').value = persona.systemPrompt;
-        document.getElementById('editPersonaTraits').value = persona.traits.join(', ');
+        document.getElementById('editPersonaTraits').value = persona.tags ? persona.tags.join(', ') : (persona.traits ? persona.traits.join(', ') : '');
+        
+        // Populate trait sliders
+        const traitDefinitions = Storage.getTraitDefinitions();
+        const traitContainer = document.getElementById('editTraitSlidersContainer');
+        if (traitContainer) {
+            traitContainer.innerHTML = '';
+            traitDefinitions.forEach(trait => {
+                if (trait.enabled) {
+                    const value = persona.traitValues && persona.traitValues[trait.id] !== undefined ? persona.traitValues[trait.id] : 50;
+                    const div = document.createElement('div');
+                    div.style.marginBottom = '8px';
+                    div.innerHTML = `
+                        <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                            <span>${trait.label}</span>
+                            <span id="edit-trait-${trait.id}-display">${value}</span>
+                        </div>
+                        <input type="range" id="edit-trait-${trait.id}" min="0" max="100" value="${value}" style="width: 100%;" onchange="document.getElementById('edit-trait-${trait.id}-display').textContent = this.value">
+                    `;
+                    traitContainer.appendChild(div);
+                }
+            });
+        }
         
         // Open modal
         openModal('editPersonaModal');
@@ -1416,12 +1986,22 @@ Format responses with clear sections:
         const prompt = document.getElementById('editPersonaPrompt').value.trim();
         const traits = document.getElementById('editPersonaTraits').value.split(',').map(t => t.trim()).filter(t => t);
         
+        // Capture trait slider values
+        const traitDefinitions = Storage.getTraitDefinitions();
+        const traitValues = {};
+        traitDefinitions.forEach(trait => {
+            const slider = document.getElementById(`edit-trait-${trait.id}`);
+            if (slider) {
+                traitValues[trait.id] = parseInt(slider.value);
+            }
+        });
+        
         if (!name || !prompt) return alert('Please fill in all required fields');
         
         let personas = Storage.getPersonas();
         personas = personas.map(p => 
             p.id === personaId 
-                ? { ...p, name, avatar, systemPrompt: prompt, traits }
+                ? { ...p, name, avatar, systemPrompt: prompt, tags: traits, traitValues }
                 : p
         );
         
