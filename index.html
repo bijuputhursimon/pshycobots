@@ -1401,6 +1401,96 @@
     </div>
 </div>
 
+<div id="userGuideModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">📖 Psychology Bot Swarm - User Guide</div>
+        <div style="max-height: 70vh; overflow-y: auto; font-size: 13px; line-height: 1.6; color: #333;">
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">🔑 HOW TO GET YOUR GEMINI API KEY</strong>
+                <ol style="margin-top: 8px; padding-left: 20px;">
+                    <li>Go to: <a href="https://aistudio.google.com/app/api-keys" target="_blank" style="color: #075e54; text-decoration: none; font-weight: 600;">https://aistudio.google.com/app/api-keys</a></li>
+                    <li>Click the blue "Get API key" button</li>
+                    <li>Select "Create API key in new project"</li>
+                    <li>Name your project (e.g., "Psychology Bot Swarm")</li>
+                    <li>Select "Gemini API" from the dropdown</li>
+                    <li>Click "Create Key"</li>
+                    <li>Copy the generated API key</li>
+                    <li>Paste it in the "Gemini API Key" field in Settings</li>
+                    <li>Click "Save Key" to encrypt and store locally</li>
+                </ol>
+            </div>
+
+            <div style="background: #fff3e0; padding: 10px; border-left: 4px solid #ff9800; margin-bottom: 16px; border-radius: 4px;">
+                <strong>⚠️ SECURITY NOTE:</strong> Never share your API key. It's encrypted and stored locally on your device only.
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">🎯 GETTING STARTED</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>Set your Gemini API key in Settings (see above)</li>
+                    <li>Create bot personas with distinct personalities</li>
+                    <li>Form groups by combining personas</li>
+                    <li>Chat with multiple personas simultaneously</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">🎭 PERSONAS</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>Each persona has unique system prompt and traits</li>
+                    <li>Customize how they think, respond, and communicate</li>
+                    <li>Edit or delete personas anytime</li>
+                    <li>Click ✎ to edit, ✕ to delete</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">💬 GROUPS</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>Combine multiple personas in one conversation</li>
+                    <li>All personas respond to your messages</li>
+                    <li>Messages persist and personas remember context</li>
+                    <li>Organize your conversations by topic or scenario</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">🎓 MENTOR BOT</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>Click "💡 Coach Me" button after any bot response</li>
+                    <li>Or open Mentor modal and ask coaching questions</li>
+                    <li>Get strategic guidance + response templates</li>
+                    <li>Persona-aware coaching tailored to the bot</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">💾 DATA & PRIVACY</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>All data (personas, groups, messages) stored locally</li>
+                    <li>API key is Base64 encrypted for security</li>
+                    <li>Export your data anytime as JSON backup</li>
+                    <li>Clear all data with one click (Settings → Clear All Data)</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <strong style="font-size: 14px;">🚀 ADVANCED TIPS</strong>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>Use personas for different perspectives in meetings</li>
+                    <li>Mentor helps improve communication skills</li>
+                    <li>Create groups for: sales scenarios, interviews, decisions</li>
+                    <li>Edit persona prompts to fine-tune behavior</li>
+                    <li>Export conversations for record-keeping</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-primary" onclick="closeModal('userGuideModal')">Close</button>
+        </div>
+    </div>
+</div>
+
 <!-- SCRIPTS -->
 <script type="module">
     import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
@@ -2192,58 +2282,7 @@ Format responses with clear sections:
 
     window.showUserGuide = () => {
         switchSidebarSection('settings');
-        alert(`📖 PSYCHOLOGY BOT SWARM - USER GUIDE
-
-🔑 HOW TO GET YOUR GEMINI API KEY
-1. Go to: https://aistudio.google.com/app/api-keys
-2. Click the blue "Get API key" button
-3. Select "Create API key in new project"
-4. Name your project (e.g., "Psychology Bot Swarm")
-5. Select "Gemini API" from the dropdown
-6. Click "Create Key"
-7. Copy the generated API key
-8. Paste it in the "Gemini API Key" field in Settings
-9. Click "Save Key" to encrypt and store locally
-
-⚠️ SECURITY NOTE: Never share your API key. It's encrypted and stored locally on your device only.
-
-🎯 GETTING STARTED
-1. Set your Gemini API key in Settings (see above)
-2. Create bot personas with distinct personalities
-3. Form groups by combining personas
-4. Chat with multiple personas simultaneously
-
-🎭 PERSONAS
-- Each persona has unique system prompt and traits
-- Customize how they think, respond, and communicate
-- Edit or delete personas anytime
-- Click ✎ to edit, ✕ to delete
-
-💬 GROUPS
-- Combine multiple personas in one conversation
-- All personas respond to your messages
-- Messages persist and personas remember context
-- Organize your conversations by topic or scenario
-
-🎓 MENTOR BOT
-- Click "💡 Coach Me" button after any bot response
-- Or open Mentor modal and ask coaching questions
-- Get strategic guidance + response templates
-- Persona-aware coaching tailored to the bot
-
-💾 DATA & PRIVACY
-- All data (personas, groups, messages) stored locally
-- API key is Base64 encrypted for security
-- Export your data anytime as JSON backup
-- Clear all data with one click (Settings → Clear All Data)
-
-🚀 ADVANCED TIPS
-- Use personas for different perspectives in meetings
-- Mentor helps improve communication skills
-- Create groups for: sales scenarios, interviews, decisions
-- Edit persona prompts to fine-tune behavior
-- Export conversations for record-keeping
-`);
+        openModal('userGuideModal');
     };
 
     window.exportData = () => {
