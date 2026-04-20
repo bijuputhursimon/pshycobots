@@ -1000,27 +1000,34 @@
 
             .input-area {
                 flex-shrink: 0;
-                padding: 6px;
-                gap: 4px;
+                padding: 8px 8px;
+                gap: 6px;
                 border-top: 1px solid #e5e5e5;
+                background: #f5f5f5;
             }
 
             .input-wrapper {
-                gap: 4px;
+                gap: 6px;
+                display: flex;
+                flex-direction: column;
             }
 
             .input-box {
-                gap: 6px;
+                gap: 8px;
+                display: flex;
+                align-items: flex-end;
             }
 
             #userInput {
-                padding: 12px 14px;
-                font-size: 15px;
-                border-radius: 18px;
+                padding: 14px 16px;
+                font-size: 16px;
+                border-radius: 20px;
                 flex: 1;
-                min-height: 50px;
-                max-height: 140px;
-                line-height: 1.4;
+                min-height: 60px;
+                max-height: 160px;
+                line-height: 1.5;
+                border: 2px solid #048a81;
+                background: white;
             }
 
             #userInput::placeholder {
@@ -1028,59 +1035,97 @@
             }
 
             .send-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
                 flex-shrink: 0;
                 align-self: flex-end;
+                background: #075e54;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .send-btn:active {
+                opacity: 0.8;
+                transform: scale(0.95);
             }
 
             .responder-selector {
-                gap: 2px;
-                font-size: 10px;
-                padding: 2px 0;
-                flex-wrap: nowrap;
+                gap: 6px;
+                font-size: 11px;
+                padding: 6px 0;
+                flex-wrap: wrap;
+                background: white;
+                padding: 8px 10px;
+                border-radius: 12px;
+                border: 1px solid #ddd;
+                align-items: center;
             }
 
             .responder-selector.show {
                 display: flex !important;
-                padding: 2px 0;
-                border: none;
+                padding: 8px 10px;
+                border: 1px solid #075e54;
+                margin-bottom: 2px;
             }
 
             .responder-current {
-                padding: 2px 6px;
-                font-size: 10px;
+                padding: 4px 10px;
+                font-size: 12px;
                 flex: 1;
-                min-width: 0;
+                min-width: 100px;
+                background: #f0fdf7;
+                border: 1px solid #075e54;
+                border-radius: 14px;
+                font-weight: 600;
+                color: #075e54;
             }
 
             .responder-avatar-small {
-                width: 18px;
-                height: 18px;
-                font-size: 9px;
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
             }
 
             .responder-name-small {
-                font-size: 9px;
+                font-size: 11px;
+                font-weight: 600;
             }
 
             .responder-nav {
-                gap: 1px;
+                gap: 4px;
+                display: flex;
             }
 
             .responder-nav-btn {
-                padding: 2px 4px;
-                font-size: 9px;
-                min-width: 20px;
-                height: 20px;
+                padding: 4px 8px;
+                font-size: 11px;
+                min-width: 28px;
+                height: 28px;
+                font-weight: 600;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+
+            .responder-nav-btn:active {
+                background: #075e54;
+                color: white;
+                border-color: #075e54;
             }
 
             .pass-icon-btn {
-                width: 44px;
-                height: 44px;
-                padding: 4px 6px;
-                font-size: 16px;
+                width: 48px;
+                height: 48px;
+                padding: 6px 8px;
+                font-size: 18px;
                 flex-shrink: 0;
                 align-self: flex-end;
             }
