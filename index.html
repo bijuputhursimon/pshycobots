@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Psychology Bot Swarm - Multi-Persona Conversations</title>
@@ -238,6 +239,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            margin-bottom: 10px;
         }
 
         .form-group label {
@@ -648,6 +650,7 @@
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.2s;
+            overflow-y: auto;
         }
 
         @keyframes fadeIn {
@@ -1148,10 +1151,13 @@
 
             .modal-content {
                 width: 100%;
-                max-height: calc(100vh - 48px);
+                max-height: calc(100vh - 96px);
                 max-width: 100%;
                 border-radius: 12px 12px 0 0;
                 margin-top: auto;
+                padding: 16px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .modal-header {
@@ -1367,7 +1373,7 @@
         </div>
         <div class="form-group">
             <label>Character Trait Sliders</label>
-            <div id="createTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px;"></div>
+            <div id="createTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px; min-height: 80px; border: 1px solid #e5e5e5;"></div>
         </div>
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('createPersonaModal')">Cancel</button>
@@ -1437,7 +1443,7 @@
         </div>
         <div class="form-group">
             <label>Character Trait Sliders</label>
-            <div id="editTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px;"></div>
+            <div id="editTraitSlidersContainer" style="background: #f9f9f9; padding: 10px; border-radius: 6px; min-height: 80px; border: 1px solid #e5e5e5;"></div>
         </div>
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('editPersonaModal')">Cancel</button>
@@ -1976,33 +1982,61 @@ Format responses with clear sections:
         if (passBtn) passBtn.style.display = 'flex';
     }
     
-    async function getResponderResponse() {
-        if (!currentGroup) return;
+    window.getResponderResponse = async function() {
+        console.log('Pass button clicked. currentGroup:', currentGroup?.id, 'nextResponderIndex:', nextResponderIndex);
+        
+        if (!currentGroup) {
+            alert('No group selected');
+            return;
+        }
         
         const group = Storage.getGroups().find(g => g.id === currentGroup.id);
-        const personas = Storage.getPersonas().filter(p => group.personaIds.includes(p.id));
-        const persona = personas[nextResponderIndex];
+        if (!group) {
+            alert('Group not found');
+            return;
+        }
         
-        if (!persona) return;
+        const personas = Storage.getPersonas().filter(p => group.personaIds.includes(p.id));
+        console.log('Found personas:', personas.length, 'at index:', nextResponderIndex);
+        
+        if (personas.length === 0) {
+            alert('No personas in this group');
+            return;
+        }
+        
+        const persona = personas[nextResponderIndex % personas.length];
+        console.log('Selected persona:', persona?.name);
+        
+        if (!persona) {
+            alert('No persona found at index');
+            return;
+        }
         
         // Get the last user message
         const messages = Storage.getGroupMessages(currentGroup.id);
         const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+        console.log('Last user message:', lastUserMsg?.text?.substring(0, 50));
         
         if (!lastUserMsg) {
-            alert('No user message to respond to');
+            alert('No user message to respond to. Please type a message first.');
             return;
         }
         
         const apiKey = Storage.getApiKey();
-        if (!apiKey) return alert('Please set your API key in settings');
+        if (!apiKey) {
+            alert('Please set your API key in Settings first');
+            return;
+        }
         
+        console.log('Getting response from:', persona.name);
+        // Get response from the selected persona
         await getPersonaResponse(persona, lastUserMsg.text, apiKey);
         
-        // Move to next persona
+        // Move to next persona for next turn
         nextResponderIndex = (nextResponderIndex + 1) % personas.length;
+        console.log('Updated nextResponderIndex to:', nextResponderIndex);
         updateResponderSelector(currentGroup.id);
-    }
+    };
 
     // ==================== CHAT & MESSAGING ====================
     function displayMessage(msg, isNew = false) {
@@ -2087,8 +2121,29 @@ Format responses with clear sections:
                 await getPersonaResponse(persona, text, apiKey);
             }
         } else {
-            // No @mentions - prompt user to select responder via Pass button
-            nextResponderIndex = 0;
+            // No @mentions - automatically get response from current responder (turn-based)
+            if (allPersonas.length === 0) {
+                const msg = {
+                    role: 'model',
+                    text: '❌ No personas in this group. Add personas to get responses.',
+                    senderPersonaId: null,
+                    timestamp: new Date().toISOString()
+                };
+                messages.push(msg);
+                Storage.saveGroupMessages(currentGroup.id, messages);
+                displayMessage(msg, true);
+                return;
+            }
+            
+            const apiKey = Storage.getApiKey();
+            if (!apiKey) return alert('Please set your API key in settings');
+            
+            // Get response from current responder
+            const currentPersona = allPersonas[nextResponderIndex % allPersonas.length];
+            await getPersonaResponse(currentPersona, text, apiKey);
+            
+            // Move to next persona for next turn
+            nextResponderIndex = (nextResponderIndex + 1) % allPersonas.length;
             updateResponderSelector(currentGroup.id);
         }
 
